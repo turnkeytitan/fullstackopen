@@ -26,17 +26,23 @@ const App = () => {
   };
   const addRecord = (event) => {
     event.preventDefault();
-    if (!persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())) {
+    if (
+      !persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())
+    ) {
       const newPerson = { name: newName, number: newPhone };
-      PersonsService.create(newPerson).then(
-        ({ data }) => {
-          newMessage(`${newName} added`, "success");
-          getPersons();
-        },
-      );
+      PersonsService.create(newPerson).then(({ data }) => {
+        newMessage(`${newName} added`, "success");
+        getPersons();
+      });
     } else {
-      const person = persons.find((person) => person.name.toLowerCase() === newName.toLowerCase());
-      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+      const person = persons.find(
+        (person) => person.name.toLowerCase() === newName.toLowerCase()
+      );
+      if (
+        window.confirm(
+          `${newName} is already added to phonebook, replace the old number with a new one?`
+        )
+      ) {
         PersonsService.update(person.id, { ...person, number: newPhone }).then(
           () => {
             newMessage(`${newName} updated`, "success");
@@ -80,7 +86,10 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Notification message={message}></Notification>
-      <Filter filter={filter} handleNewFilter={handleNewFilter} />
+      <Filter
+        filter={filter}
+        handleNewFilter={handleNewFilter}
+      />
       <h2>Add a new</h2>
       <PersonForm
         addRecord={addRecord}
@@ -90,7 +99,11 @@ const App = () => {
         handleNewPhone={handleNewPhone}
       />
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} remove={remove} />
+      <Persons
+        persons={persons}
+        filter={filter}
+        remove={remove}
+      />
     </div>
   );
 };
