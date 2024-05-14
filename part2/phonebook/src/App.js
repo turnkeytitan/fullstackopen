@@ -29,7 +29,7 @@ const App = () => {
     if (
       !persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())
     ) {
-      const newPerson = { name: newName, number: newPhone };
+      const newPerson = { name: newName, num: newPhone };
       PersonsService.create(newPerson).then(({ data }) => {
         newMessage(`${newName} added`, "success");
         getPersons();
@@ -43,7 +43,7 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        PersonsService.update(person.id, { ...person, number: newPhone }).then(
+        PersonsService.update(person.id, { ...person, num: newPhone }).then(
           () => {
             newMessage(`${newName} updated`, "success");
             getPersons();
@@ -68,17 +68,10 @@ const App = () => {
   };
   const remove = ({ name, id }) => {
     if (window.confirm(`Delete ${name}?`)) {
-      PersonsService.remove(id).then(
-        (response) => {
-          const newPersons = persons.filter((person) => person.id !== id);
-          setPersons(newPersons);
-        },
-        (error) => {
-          if (error.response.status === 404) {
-            newMessage(`${name} does not exist on the server`, "error");
-          }
-        }
-      );
+      PersonsService.remove(id).then((response) => {
+        const newPersons = persons.filter((person) => person.id !== id);
+        setPersons(newPersons);
+      });
     }
   };
 
