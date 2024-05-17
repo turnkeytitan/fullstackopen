@@ -30,10 +30,14 @@ const App = () => {
       !persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())
     ) {
       const newPerson = { name: newName, num: newPhone };
-      PersonsService.create(newPerson).then(({ data }) => {
-        newMessage(`${newName} added`, "success");
-        getPersons();
-      });
+      PersonsService.create(newPerson)
+        .then(({ data }) => {
+          newMessage(`${newName} added`, "success");
+          getPersons();
+        })
+        .catch((err) => {
+          newMessage(err.response.data.message, "error");
+        });
     } else {
       const person = persons.find(
         (person) => person.name.toLowerCase() === newName.toLowerCase()
@@ -43,17 +47,15 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        PersonsService.update(person.id, { ...person, num: newPhone }).then(
-          () => {
+        PersonsService.update(person.id, { ...person, num: newPhone })
+          .then(() => {
             newMessage(`${newName} updated`, "success");
             getPersons();
-          },
-          (error) => {
-            if (error.response.status === 404) {
-              newMessage(`${newName} does not exist on the server`, "error");
-            }
-          }
-        );
+          })
+          .catch((err) => {
+            console.log(err);
+            newMessage(err.response.data.message, "error");
+          });
       }
     }
   };
