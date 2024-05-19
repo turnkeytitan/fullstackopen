@@ -10,7 +10,8 @@ app.use(express.static("build"));
 app.use(express.json());
 
 function format(tokens, req, res) {
-  const body = tokens.method(req, res) === "POST" ? JSON.stringify(req.body) : "";
+  const body =
+    tokens.method(req, res) === "POST" ? JSON.stringify(req.body) : "";
   return [
     tokens.method(req, res),
     tokens.url(req, res),
@@ -35,7 +36,7 @@ app.get("/api/persons/:id", async (request, response, next) => {
     const person = await Book.findById(request.params.id);
     response.json(person);
   } catch (error) {
-    next(error)
+    next(error);
   }
 });
 
@@ -44,7 +45,7 @@ app.get("/info", (request, response, next) => {
   Book.find({})
     .then((contacts) => {
       response.send(
-        `<p>Phonebook has info for ${contacts.length} people</p><p>${date}</p>`
+        `<p>Phonebook has info for ${contacts.length} people</p><p>${date}</p>`,
       );
     })
     .catch(next);
