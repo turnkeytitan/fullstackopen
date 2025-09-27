@@ -29,7 +29,7 @@ const App = () => {
     if (
       !persons.some((person) => person.name.toLowerCase() === newName.toLowerCase())
     ) {
-      const newPerson = { name: newName, num: newPhone };
+      const newPerson = { name: newName, number: newPhone };
       PersonsService.create(newPerson)
         .then(({ data }) => {
           newMessage(`${newName} added`, "success");
@@ -47,7 +47,7 @@ const App = () => {
           `${newName} is already added to phonebook, replace the old number with a new one?`
         )
       ) {
-        PersonsService.update(person.id, { ...person, num: newPhone })
+        PersonsService.update(person.id, { ...person, number: newPhone })
           .then(() => {
             newMessage(`${newName} updated`, "success");
             getPersons();

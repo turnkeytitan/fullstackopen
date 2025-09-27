@@ -9,7 +9,7 @@ const Persons = ({ persons, filter, remove }) => {
           })
           .map((person) => (
             <li key={person.id}>
-              {person.name} {person.num} <button onClick={remove.bind(this, { name: person.name, id: person.id })}>delete</button>
+              {person.name} {person.number} <button onClick={remove.bind(this, { name: person.name, id: person.id })}>delete</button>
             </li>
           ))}
     </ul>
